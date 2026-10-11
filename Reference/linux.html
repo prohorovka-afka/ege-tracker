@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8"><title>Linux</title>
+<style>
+body { font-family: 'Segoe UI', Arial, sans-serif; line-height: 1.6; padding: 20px; max-width: 900px; }
+h1 { border-bottom: 3px solid #4F8DF7; padding-bottom: 8px; }
+h2 { margin-top: 28px; padding-left: 8px; border-left: 4px solid #4F8DF7; }
+table { border-collapse: collapse; margin: 12px 0; width: 100%; }
+th, td { padding: 8px 12px; text-align: left; border: 1px solid #ccc; }
+th { background: #EEF2F7; }
+code { background: #EEF2F7; padding: 2px 6px; border-radius: 4px; font-family: Consolas, monospace; }
+pre { background: #263547; color: #F1F5F9; padding: 12px; border-radius: 6px; overflow-x: auto; }
+.tip { padding: 12px; border-left: 4px solid #34D399; border-radius: 6px; margin: 16px 0; }
+</style></head><body>
+
+<h1>🐧 Linux — Справочник команд</h1>
+
+<h2>1. Навигация</h2>
+<table>
+<tr><th>Команда</th><th>Описание</th></tr>
+<tr><td><code>pwd</code></td><td>Показать текущий каталог</td></tr>
+<tr><td><code>ls -la</code></td><td>Список всех файлов с деталями</td></tr>
+<tr><td><code>cd /path</code></td><td>Перейти в каталог</td></tr>
+<tr><td><code>cd ..</code></td><td>На уровень вверх</td></tr>
+<tr><td><code>cd ~</code></td><td>В домашний каталог</td></tr>
+</table>
+
+<h2>2. Работа с файлами</h2>
+<table>
+<tr><th>Команда</th><th>Описание</th></tr>
+<tr><td><code>cp -r src dst</code></td><td>Копировать рекурсивно</td></tr>
+<tr><td><code>mv src dst</code></td><td>Переместить / переименовать</td></tr>
+<tr><td><code>rm -rf dir</code></td><td>Удалить рекурсивно</td></tr>
+<tr><td><code>touch file</code></td><td>Создать пустой файл</td></tr>
+<tr><td><code>mkdir -p a/b/c</code></td><td>Создать вложенные каталоги</td></tr>
+<tr><td><code>cat file</code></td><td>Вывести содержимое</td></tr>
+</table>
+
+<h2>3. Права доступа</h2>
+<table>
+<tr><th>Команда</th><th>Описание</th></tr>
+<tr><td><code>chmod 755 file</code></td><td>rwxr-xr-x</td></tr>
+<tr><td><code>chmod 644 file</code></td><td>rw-r--r--</td></tr>
+<tr><td><code>chown user:group file</code></td><td>Сменить владельца</td></tr>
+<tr><td><code>umask 022</code></td><td>Маска по умолчанию</td></tr>
+</table>
+
+<h2>4. Поиск</h2>
+<pre><code>grep "pattern" file.txt            # поиск строк
+grep -r "pattern" .                # рекурсивный поиск
+find / -name "*.txt"               # поиск файлов
+find / -size +10M                  # файлы > 10 МБ
+which command                      # путь к команде</code></pre>
+
+<h2>5. Процессы</h2>
+<table>
+<tr><th>Команда</th><th>Описание</th></tr>
+<tr><td><code>ps aux</code></td><td>Все процессы</td></tr>
+<tr><td><code>top</code></td><td>Мониторинг в реальном времени</td></tr>
+<tr><td><code>htop</code></td><td>Улучшенный top</td></tr>
+<tr><td><code>kill -9 PID</code></td><td>Убить процесс</td></tr>
+<tr><td><code>jobs / fg / bg</code></td><td>Управление задачами</td></tr>
+</table>
+
+<h2>6. Сеть</h2>
+<table>
+<tr><th>Команда</th><th>Описание</th></tr>
+<tr><td><code>ip a</code></td><td>Показать IP-адреса</td></tr>
+<tr><td><code>ping host</code></td><td>Проверка доступности</td></tr>
+<tr><td><code>curl url</code></td><td>HTTP-запрос</td></tr>
+<tr><td><code>wget url</code></td><td>Скачать файл</td></tr>
+<tr><td><code>ssh user@host</code></td><td>Подключиться по SSH</td></tr>
+</table>
+
+<h2>7. Архивация</h2>
+<pre><code>tar -czf archive.tar.gz dir/       # сжать
+tar -xzf archive.tar.gz            # распаковать
+zip -r archive.zip dir/            # zip
+unzip archive.zip                  # распаковать zip</code></pre>
+
+<div class="tip">💡 <b>Совет:</b> используй <code>man command</code> для справки по любой команде.</div>
+
+<hr><p style="text-align: center; opacity: 0.6;">Linux · Справочник команд</p>
+</body></html>

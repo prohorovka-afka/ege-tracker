@@ -1,0 +1,129 @@
+<UserControl x:Class="EgeTracker.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="600" d:DesignWidth="800">
+    <Grid Margin="20">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+
+                <!-- Тема -->
+                <Border Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="Theme" FontSize="16" FontWeight="Bold"
+                                   Foreground="{DynamicResource BrushTextPrimary}"/>
+                        <TextBlock Margin="0,6,0,10"
+                                   Foreground="{DynamicResource BrushTextSecondary}">
+                            <Run Text="Current: "/>
+                            <Run Text="{Binding Theme, Mode=OneWay}" FontWeight="SemiBold"/>
+                        </TextBlock>
+                        <Button Content="Toggle Theme"
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource ModernButtonStyle}"
+                                Command="{Binding ToggleThemeCommand}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Фон -->
+                <Border Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="Background" FontSize="16" FontWeight="Bold"
+                                   Foreground="{DynamicResource BrushTextPrimary}"/>
+                        <TextBlock Margin="0,6,0,10" TextWrapping="Wrap"
+                                   Foreground="{DynamicResource BrushTextSecondary}"
+                                   Text="{Binding BackgroundPath,
+                                          StringFormat=File: {0},
+                                          TargetNullValue=File: not set}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="Choose Image"
+                                    Style="{StaticResource ModernButtonStyle}"
+                                    Command="{Binding ChooseBackgroundCommand}"
+                                    Margin="0,0,8,0"/>
+                            <Button Content="Clear Background"
+                                    Style="{StaticResource SecondaryButtonStyle}"
+                                    Command="{Binding ClearBackgroundCommand}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <!-- ФИПИ -->
+                <Border Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="📥 Обновления ФИПИ"
+                                   FontSize="16" FontWeight="Bold"
+                                   Foreground="{DynamicResource BrushTextPrimary}"/>
+                        <TextBlock Text="Сверяет локальные задания с актуальными на сайте ФИПИ."
+                                   Margin="0,6,0,12" TextWrapping="Wrap" FontSize="12"
+                                   Foreground="{DynamicResource BrushTextSecondary}"/>
+                        <Button Content="🔄 Проверить обновления ФИПИ"
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource ModernButtonStyle}"
+                                Command="{Binding CheckUpdatesCommand}"
+                                IsEnabled="{Binding IsCheckingUpdates,
+                                            Converter={StaticResource InverseBoolConverter}}"/>
+                        <ProgressBar Style="{StaticResource ModernProgressBarStyle}"
+                                     IsIndeterminate="True" Margin="0,12,0,0"
+                                     Visibility="{Binding IsCheckingUpdates,
+                                                  Converter={StaticResource BoolToVisibilityConverter}}"/>
+                        <TextBlock Text="{Binding UpdateStatus}"
+                                   Margin="0,12,0,0" TextWrapping="Wrap" FontSize="12"
+                                   Foreground="{DynamicResource BrushTextSecondary}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- English -->
+                <Border Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🇬🇧 English (грамматика)"
+                                   FontSize="16" FontWeight="Bold"
+                                   Foreground="{DynamicResource BrushTextPrimary}"/>
+                        <TextBlock Text="Грамматические упражнения с GitHub How-Easy и EnglishGrammar.org."
+                                   Margin="0,6,0,12" TextWrapping="Wrap" FontSize="12"
+                                   Foreground="{DynamicResource BrushTextSecondary}"/>
+                        <Button Content="📥 Скачать English"
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource ModernButtonStyle}"
+                                Command="{Binding LoadEnglishCommand}"
+                                IsEnabled="{Binding IsLoadingEnglish,
+                                            Converter={StaticResource InverseBoolConverter}}"/>
+                        <ProgressBar Style="{StaticResource ModernProgressBarStyle}"
+                                     IsIndeterminate="True" Margin="0,12,0,0"
+                                     Visibility="{Binding IsLoadingEnglish,
+                                                  Converter={StaticResource BoolToVisibilityConverter}}"/>
+                        <TextBlock Text="{Binding EnglishStatus}"
+                                   Margin="0,12,0,0" TextWrapping="Wrap" FontSize="12"
+                                   Foreground="{DynamicResource BrushTextSecondary}"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Linux -->
+                <Border Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="🐧 Linux (man-страницы)"
+                                   FontSize="16" FontWeight="Bold"
+                                   Foreground="{DynamicResource BrushTextPrimary}"/>
+                        <TextBlock Text="Описания команд с man7.org — автоматически генерируются вопросы."
+                                   Margin="0,6,0,12" TextWrapping="Wrap" FontSize="12"
+                                   Foreground="{DynamicResource BrushTextSecondary}"/>
+                        <Button Content="📥 Скачать Linux"
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource ModernButtonStyle}"
+                                Command="{Binding LoadLinuxCommand}"
+                                IsEnabled="{Binding IsLoadingLinux,
+                                            Converter={StaticResource InverseBoolConverter}}"/>
+                        <ProgressBar Style="{StaticResource ModernProgressBarStyle}"
+                                     IsIndeterminate="True" Margin="0,12,0,0"
+                                     Visibility="{Binding IsLoadingLinux,
+                                                  Converter={StaticResource BoolToVisibilityConverter}}"/>
+                        <TextBlock Text="{Binding LinuxStatus}"
+                                   Margin="0,12,0,0" TextWrapping="Wrap" FontSize="12"
+                                   Foreground="{DynamicResource BrushTextSecondary}"/>
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

@@ -1,0 +1,116 @@
+<UserControl x:Class="EgeTracker.Views.VariantView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="700" d:DesignWidth="1000">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Панель управления -->
+        <Border Grid.Row="0" Style="{StaticResource CardStyle}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Предмет:" VerticalAlignment="Center" Margin="0,0,8,0"
+                           Foreground="{DynamicResource BrushTextPrimary}"/>
+                <ComboBox Width="240"
+                          ItemsSource="{Binding Subjects}"
+                          SelectedItem="{Binding SelectedSubject}"
+                          DisplayMemberPath="Name"
+                          Margin="0,0,20,0"
+                          Style="{StaticResource ModernComboBoxStyle}"
+                          ItemContainerStyle="{StaticResource ModernComboBoxItemStyle}"/>
+
+                <Button Content="📋 Собрать вариант"
+                        Style="{StaticResource ModernButtonStyle}"
+                        Command="{Binding BuildVariantCommand}"
+                        Margin="0,0,8,0"/>
+                <Button Content="✓ Проверить вариант"
+                        Style="{StaticResource ModernButtonStyle}"
+                        Command="{Binding CheckVariantCommand}"
+                        Margin="0,0,8,0"/>
+
+                <!-- ⭐ Кнопка «Работа над ошибками» — видна только после проверки варианта -->
+                <Button Content="🎯 Работа над ошибками"
+                        Style="{StaticResource SecondaryButtonStyle}"
+                        Command="{Binding WorkOnErrorsCommand}"
+                        Visibility="{Binding ShowWorkOnErrors,
+                                     Converter={StaticResource BoolToVisibilityConverter}}"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Список заданий варианта -->
+        <Border Grid.Row="1" Style="{StaticResource CardStyle}" Margin="0,12,0,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding Entries}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource CardStyle}" Margin="0,4">
+                                <StackPanel>
+                                    <!-- Номер и тип -->
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                                        <Border Background="{DynamicResource BrushAccent}"
+                                                CornerRadius="6" Padding="10,4">
+                                            <TextBlock Text="{Binding Task.KimPosition,
+                                                              StringFormat=Задание № {0}}"
+                                                       Foreground="White" FontWeight="Bold"
+                                                       FontSize="13"/>
+                                        </Border>
+                                        <Border Background="{DynamicResource BrushSurfaceAlt}"
+                                                CornerRadius="6" Padding="10,4" Margin="8,0,0,0">
+                                            <TextBlock Text="{Binding Task.TaskType}"
+                                                       Foreground="{DynamicResource BrushTextPrimary}"
+                                                       FontSize="12"/>
+                                        </Border>
+                                    </StackPanel>
+
+                                    <!-- Текст задания -->
+                                    <TextBlock Text="{Binding Task.Question}"
+                                               TextWrapping="Wrap" LineHeight="22"
+                                               Margin="0,4,0,0"
+                                               Foreground="{DynamicResource BrushTextPrimary}"/>
+
+                                    <!-- Поле ответа -->
+                                    <TextBox Style="{StaticResource ModernTextBoxStyle}"
+                                             Width="320" HorizontalAlignment="Left"
+                                             Margin="0,8,0,0"
+                                             Text="{Binding UserAnswer,
+                                                    UpdateSourceTrigger=PropertyChanged}"/>
+
+                                    <!-- Статус -->
+                                    <TextBlock Text="{Binding StatusText}"
+                                               Margin="0,8,0,0" FontWeight="SemiBold"
+                                               Foreground="{DynamicResource BrushAccent}"/>
+
+                                    <!-- Видеоразбор -->
+                                    <Button Content="▶ Видеоразбор"
+                                            Style="{StaticResource SecondaryButtonStyle}"
+                                            Padding="10,5" Margin="0,8,0,0"
+                                            HorizontalAlignment="Left"
+                                            Command="{Binding DataContext.OpenVideoCommand,
+                                                      RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding}"
+                                            Visibility="{Binding HasVideo,
+                                                         Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Итог -->
+        <Border Grid.Row="2" Style="{StaticResource CardStyle}" Margin="0,12,0,0"
+                Visibility="{Binding HasResults,
+                             Converter={StaticResource BoolToVisibilityConverter}}">
+            <TextBlock Text="{Binding Summary}" TextWrapping="Wrap"
+                       FontSize="14" LineHeight="22"
+                       Foreground="{DynamicResource BrushTextPrimary}"/>
+        </Border>
+    </Grid>
+</UserControl>

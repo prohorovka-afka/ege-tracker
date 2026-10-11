@@ -1,0 +1,165 @@
+<UserControl x:Class="EgeTracker.Views.TrackerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:EgeTracker.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="700" d:DesignWidth="1000">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Style="{StaticResource CardStyle}">
+            <StackPanel>
+                <TextBlock Text="Прогресс по предметам"
+                           FontSize="16" FontWeight="Bold"
+                           Foreground="{DynamicResource BrushTextPrimary}"
+                           Margin="0,0,0,12"/>
+
+                <ItemsControl ItemsSource="{Binding Subjects}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Width="180" Margin="8,0,8,8"
+                                        HorizontalAlignment="Center">
+                                <controls:CircularProgress
+                                    Value="{Binding ProgressPercent, Mode=OneWay}"
+                                    Width="140" Height="140"
+                                    HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding Name}"
+                                           FontWeight="SemiBold"
+                                           HorizontalAlignment="Center"
+                                           Margin="0,6,0,0"
+                                           TextTrimming="CharacterEllipsis"
+                                           Foreground="{DynamicResource BrushTextPrimary}"/>
+                                <TextBlock HorizontalAlignment="Center"
+                                           FontSize="12"
+                                           Foreground="{DynamicResource BrushTextSecondary}">
+                                    <Run Text="Решено: "/>
+                                    <Run Text="{Binding TasksSolved, Mode=OneWay}"/>
+                                    <Run Text=" · Правильно: "/>
+                                    <Run Text="{Binding TasksCorrect, Mode=OneWay}"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </Border>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="280"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Style="{StaticResource CardStyle}">
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" Text="Предметы"
+                               FontSize="16" FontWeight="Bold"
+                               Foreground="{DynamicResource BrushTextPrimary}"
+                               Margin="0,0,0,10"/>
+
+                    <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,10,0,0">
+                        <TextBox Style="{StaticResource ModernTextBoxStyle}" Width="180"
+                                 Text="{Binding NewSubjectName, UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="0,0,8,0"/>
+                        <Button Content="+" Style="{StaticResource ModernButtonStyle}"
+                                Command="{Binding AddSubjectCommand}" Width="40"/>
+                    </StackPanel>
+
+                    <ListBox ItemsSource="{Binding Subjects}"
+                             SelectedItem="{Binding SelectedSubject}"
+                             Style="{StaticResource ModernListBoxStyle}"
+                             ItemContainerStyle="{StaticResource ModernListBoxItemStyle}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel>
+                                    <Button DockPanel.Dock="Right" Content="×"
+                                            Style="{StaticResource DangerButtonStyle}"
+                                            Padding="6,2" FontSize="12"
+                                            Command="{Binding DataContext.RemoveSubjectCommand,
+                                                      RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding}"/>
+                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                                </DockPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+            </Border>
+
+            <Border Grid.Column="1" Style="{StaticResource CardStyle}" Margin="12,0,0,0">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel DataContext="{Binding SelectedSubject}">
+                        <TextBlock Text="{Binding Name, FallbackValue='Выберите предмет'}"
+                                   FontSize="20" FontWeight="Bold"
+                                   Foreground="{DynamicResource BrushTextPrimary}"/>
+
+                        <TextBlock Margin="0,10,0,0"
+                                   Foreground="{DynamicResource BrushTextSecondary}">
+                            <Run Text="Решено заданий: "/>
+                            <Run Text="{Binding TasksSolved, Mode=OneWay}"/>
+                        </TextBlock>
+                        <TextBlock Foreground="{DynamicResource BrushTextSecondary}">
+                            <Run Text="Правильных: "/>
+                            <Run Text="{Binding TasksCorrect, Mode=OneWay}"/>
+                        </TextBlock>
+
+                        <ProgressBar Style="{StaticResource ModernProgressBarStyle}"
+                                     Value="{Binding ProgressPercent, Mode=OneWay}"
+                                     Margin="0,10,0,0" Height="14"/>
+
+                        <TextBlock Text="Темы" FontSize="16" FontWeight="Bold"
+                                   Margin="0,18,0,8"
+                                   Foreground="{DynamicResource BrushTextPrimary}"/>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                            <TextBox Style="{StaticResource ModernTextBoxStyle}" Width="240"
+                                     Text="{Binding DataContext.NewTopicName,
+                                            RelativeSource={RelativeSource AncestorType=UserControl},
+                                            UpdateSourceTrigger=PropertyChanged}"
+                                     Margin="0,0,8,0"/>
+                            <Button Content="Добавить тему"
+                                    Style="{StaticResource ModernButtonStyle}"
+                                    Command="{Binding DataContext.AddTopicCommand,
+                                              RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                        </StackPanel>
+
+                        <ItemsControl ItemsSource="{Binding Topics}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Style="{StaticResource CardStyle}" Margin="0,4">
+                                        <DockPanel>
+                                            <Button DockPanel.Dock="Right" Content="Удалить"
+                                                    Style="{StaticResource DangerButtonStyle}"
+                                                    Padding="8,4" FontSize="12"
+                                                    Command="{Binding DataContext.RemoveTopicCommand,
+                                                              RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                    CommandParameter="{Binding}"/>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding Name}"
+                                                           FontWeight="SemiBold"
+                                                           Foreground="{DynamicResource BrushTextPrimary}"/>
+                                                <ProgressBar Style="{StaticResource ModernProgressBarStyle}"
+                                                             Value="{Binding ProgressPercent, Mode=OneWay}"
+                                                             Margin="0,6,0,0"/>
+                                            </StackPanel>
+                                        </DockPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

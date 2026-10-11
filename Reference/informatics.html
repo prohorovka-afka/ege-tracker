@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8"><title>Информатика</title>
+<style>body{font-family:'Segoe UI',Arial,sans-serif;line-height:1.6;padding:20px;max-width:950px}
+h1{border-bottom:3px solid #4F8DF7;padding-bottom:8px}
+h2{margin-top:32px;padding:8px 12px;border-left:5px solid #4F8DF7;border-radius:4px}
+table{border-collapse:collapse;margin:12px 0;width:100%}
+th,td{padding:8px 12px;text-align:left;border:1px solid #ccc}
+th{background:#EEF2F7}
+pre{background:#263547;color:#F1F5F9;padding:12px;border-radius:6px;overflow-x:auto}
+code{background:#EEF2F7;padding:2px 6px;border-radius:4px;font-family:Consolas,monospace}
+.tip{padding:12px 16px;border-left:4px solid #34D399;border-radius:6px;margin:16px 0;background:#F0FDF4}
+.badge-new{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.75em;font-weight:bold;margin-left:8px;background:#F87171;color:white}</style>
+</head><body>
+<h1>💻 Информатика — Справочник по заданиям ЕГЭ 2027</h1>
+<p>27 заданий, 29 баллов, 235 минут.</p>
+<div class="tip">ℹ️ <b>Новое 2027:</b> №10 (маска подсети), №13 (анализ алгоритма), №23 (графы), №27 (ответ одной строкой).</div>
+
+<h2>Задание 1. Информационные модели</h2>
+<div class="tip">💡 Граф ↔ таблица по степеням вершин.</div>
+
+<h2>Задание 2. Таблицы истинности</h2>
+<pre><code>AND: A ∧ B
+OR:  A ∨ B
+NOT: ¬A
+Импликация: A → B = ¬A ∨ B</code></pre>
+
+<h2>Задание 3. Базы данных SQL</h2>
+<pre><code>SELECT столбцы FROM таблица
+WHERE условие
+ORDER BY столбец</code></pre>
+
+<h2>Задание 4. Условие Фано</h2>
+<div class="tip">💡 Никакое кодовое слово не начало другого. Дерево кодов.</div>
+
+<h2>Задание 5. Формальное исполнение</h2>
+<div class="tip">💡 Выполняй команды по шагам.</div>
+
+<h2>Задание 6. Результаты алгоритмов</h2>
+<div class="tip">💡 Анализируй циклы, условия, счётчики.</div>
+
+<h2>Задание 7. Объём информации</h2>
+<pre><code>Изображение: I = W · H · i
+Звук: I = f · b · t · k</code></pre>
+
+<h2>Задание 8. Измерение информации</h2>
+<pre><code>I = K · i
+N = 2^i</code></pre>
+
+<h2>Задание 9. Электронные таблицы</h2>
+<pre><code>=СУММ(A1:A10)
+=ЕСЛИ(A1>0;"да";"нет")</code></pre>
+
+<h2>Задание 10. Маска подсети <span class="badge-new">НОВОЕ</span></h2>
+<pre><code>Маска /n = n единиц
+/24 = 255.255.255.0
+Адресов: 2^(32−n)</code></pre>
+
+<h2>Задание 11. Объём сообщения</h2>
+<pre><code>I = K · i
+i = log₂ N</code></pre>
+
+<h2>Задание 12. Исполнение алгоритма</h2>
+<div class="tip">💡 Читай код, выполняй в уме.</div>
+
+<h2>Задание 13. Анализ алгоритма <span class="badge-new">НОВОЕ</span></h2>
+<div class="tip">💡 Найди закономерность, что делает код.</div>
+
+<h2>Задание 14. Системы счисления</h2>
+<pre><code>1011₂ = 8+2+1 = 11
+19₁₀ = 10011₂ (деление на 2)</code></pre>
+
+<h2>Задание 15. Логика</h2>
+<pre><code>¬(A ∧ B) = ¬A ∨ ¬B
+¬(A ∨ B) = ¬A ∧ ¬B
+A → B = ¬A ∨ B</code></pre>
+
+<h2>Задание 16. Рекурсия</h2>
+<pre><code>def F(n):
+    if n == 0: return 1
+    return n * F(n-1)</code></pre>
+
+<h2>Задание 17. Последовательности</h2>
+<pre><code>nums = [int(input()) for _ in range(10)]
+count = sum(1 for x in nums if x % 2 == 0)</code></pre>
+
+<h2>Задание 18. Таблицы (целые)</h2>
+<div class="tip">💡 Абсолютные ссылки $A$1, СУММЕСЛИ, СЧЁТЕСЛИ.</div>
+
+<h2>Задание 19. Анализ игры</h2>
+<div class="tip">💡 Анализируй с конца.</div>
+
+<h2>Задание 20. Выигрышная стратегия</h2>
+<div class="tip">💡 Позиции с любым ходом в победу соперника.</div>
+
+<h2>Задание 21. Дерево игры</h2>
+<div class="tip">💡 Строй все возможные ходы.</div>
+
+<h2>Задание 22. Архитектура</h2>
+<div class="tip">💡 Многопоточность, память.</div>
+
+<h2>Задание 23. Графы (пути) <span class="badge-new">НОВОЕ</span></h2>
+<div class="tip">💡 Динамика: количество путей до вершины.</div>
+
+<h2>Задание 24. Символьные строки</h2>
+<pre><code>s = input()
+count = sum(1 for c in s if c == 'A')</code></pre>
+
+<h2>Задание 25. Целые числа</h2>
+<pre><code>def divisors(n):
+    result = []
+    for i in range(2, int(n**0.5)+1):
+        if n % i == 0:
+            result.append(i)
+            if i != n // i: result.append(n // i)
+    return result</code></pre>
+
+<h2>Задание 26. Сортировка</h2>
+<pre><code>nums = sorted([int(input()) for _ in range(1000)])</code></pre>
+
+<h2>Задание 27. Анализ данных <span class="badge-new">НОВОЕ</span></h2>
+<div class="tip">💡 Ответ — <b>одна строка из двух чисел</b>. Эффективные алгоритмы.</div>
+
+<hr><p style="text-align:center;opacity:.6">ЕГЭ 2027 · Информатика</p>
+</body></html>

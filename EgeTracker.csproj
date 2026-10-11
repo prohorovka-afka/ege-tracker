@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>EgeTracker</RootNamespace>
+    <AssemblyName>EgeTracker</AssemblyName>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <UseWindowsForms>false</UseWindowsForms>
+    <Deterministic>true</Deterministic>
+
+    <Version>1.0.0</Version>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Company>SelfEducation</Company>
+    <Product>EgeTracker</Product>
+    <AssemblyTitle>EgeTracker</AssemblyTitle>
+
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+
+    <EnableDefaultItems>true</EnableDefaultItems>
+    <EnableDefaultPageItems>true</EnableDefaultPageItems>
+    <EnableDefaultApplicationDefinition>true</EnableDefaultApplicationDefinition>
+    <EnableDefaultCompileItems>true</EnableDefaultCompileItems>
+  </PropertyGroup>
+
+  <ItemGroup Condition="Exists('app.ico')">
+    <Resource Include="app.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AngleSharp" Version="1.8.3" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2592.51" />
+  </ItemGroup>
+
+</Project>

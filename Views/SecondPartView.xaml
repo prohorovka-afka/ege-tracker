@@ -1,0 +1,99 @@
+<UserControl x:Class="EgeTracker.Views.SecondPartView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="700" d:DesignWidth="1000">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20">
+
+            <!-- Заголовок задания -->
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Border Background="{DynamicResource BrushAccent}"
+                                CornerRadius="8" Padding="12,6">
+                            <TextBlock Text="{Binding Task.KimPosition, StringFormat=Задание № {0}}"
+                                       Foreground="White" FontWeight="Bold"/>
+                        </Border>
+                        <Border Background="{DynamicResource BrushSurfaceAlt}"
+                                CornerRadius="8" Padding="12,6" Margin="8,0,0,0">
+                            <TextBlock Text="Вторая часть" FontWeight="SemiBold"
+                                       Foreground="{DynamicResource BrushTextPrimary}"/>
+                        </Border>
+                    </StackPanel>
+
+                    <TextBlock Text="{Binding Task.Question}"
+                               TextWrapping="Wrap" FontSize="15"
+                               Margin="0,12,0,0"
+                               LineHeight="22"
+                               Foreground="{DynamicResource BrushTextPrimary}"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Поле ответа -->
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel>
+                    <TextBlock Text="Ваш ответ / решение:"
+                               FontWeight="SemiBold"
+                               Margin="0,0,0,8"
+                               Foreground="{DynamicResource BrushTextPrimary}"/>
+
+                    <TextBox Style="{StaticResource ModernTextBoxStyle}"
+                             AcceptsReturn="True"
+                             TextWrapping="Wrap"
+                             VerticalScrollBarVisibility="Auto"
+                             MinHeight="180"
+                             Text="{Binding UserAnswer, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <Button Content="✓ Проверить"
+                            Style="{StaticResource ModernButtonStyle}"
+                            Command="{Binding CheckCommand}"
+                            HorizontalAlignment="Left"
+                            Margin="0,12,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Результат -->
+            <Border Style="{StaticResource CardStyle}"
+                    Visibility="{Binding ShowResult, Converter={StaticResource BoolToVisibilityConverter}}">
+                <StackPanel>
+                    <TextBlock Text="{Binding CheckResult}"
+                               TextWrapping="Wrap"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource BrushTextPrimary}"/>
+
+                    <!-- Оценка сочинения по критериям -->
+                    <ItemsControl ItemsSource="{Binding EssayGrades}" Margin="0,10,0,0">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Display}"
+                                           Margin="0,2"
+                                           Foreground="{DynamicResource BrushTextSecondary}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <!-- Ручное выставление баллов -->
+                    <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+                        <TextBlock Text="Ваш балл:"
+                                   VerticalAlignment="Center"
+                                   Margin="0,0,8,0"
+                                   Foreground="{DynamicResource BrushTextPrimary}"/>
+                        <ComboBox Width="80"
+                                  ItemsSource="{Binding AvailableScores}"
+                                  SelectedItem="{Binding ManualScore}"
+                                  Style="{StaticResource ModernComboBoxStyle}"
+                                  ItemContainerStyle="{StaticResource ModernComboBoxItemStyle}"/>
+                        <Button Content="💾 Сохранить балл"
+                                Style="{StaticResource ModernButtonStyle}"
+                                Command="{Binding SaveScoreCommand}"
+                                Margin="12,0,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

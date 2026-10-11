@@ -1,0 +1,177 @@
+<UserControl x:Class="EgeTracker.Views.NotesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="700" d:DesignWidth="1000">
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="260"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- ============ Левая колонка: список заметок ============ -->
+        <Border Grid.Column="0" Style="{StaticResource CardStyle}">
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Top"
+                           Text="Заметки"
+                           FontSize="16" FontWeight="Bold"
+                           Margin="0,0,0,10"
+                           Foreground="{DynamicResource BrushTextPrimary}"/>
+
+                <StackPanel DockPanel.Dock="Bottom"
+                            Orientation="Horizontal"
+                            Margin="0,10,0,0">
+                    <Button Content="➕" ToolTip="Новая заметка"
+                            Focusable="False"
+                            Style="{StaticResource ModernButtonStyle}"
+                            Width="40" Margin="0,0,6,0"
+                            Command="{Binding AddNoteCommand}"/>
+                    <Button Content="✏" ToolTip="Переименовать"
+                            Focusable="False"
+                            Style="{StaticResource SecondaryButtonStyle}"
+                            Width="40" Margin="0,0,6,0"
+                            Command="{Binding RenameNoteCommand}"/>
+                    <Button Content="🗑" ToolTip="Удалить"
+                            Focusable="False"
+                            Style="{StaticResource DangerButtonStyle}"
+                            Width="40" Margin="0,0,6,0"
+                            Command="{Binding DeleteNoteCommand}"/>
+                    <Button Content="💾" ToolTip="Сохранить"
+                            Focusable="False"
+                            Style="{StaticResource ModernButtonStyle}"
+                            Command="{Binding SaveCommand}"/>
+                </StackPanel>
+
+                <ListBox ItemsSource="{Binding Notes}"
+                         SelectedItem="{Binding SelectedNote}"
+                         Style="{StaticResource ModernListBoxStyle}"
+                         ItemContainerStyle="{StaticResource ModernListBoxItemStyle}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Title}"
+                                           FontWeight="SemiBold"/>
+                                <TextBlock Text="{Binding Modified,
+                                                  StringFormat='{}{0:dd.MM.yyyy HH:mm}'}"
+                                           FontSize="10"
+                                           Foreground="{DynamicResource BrushTextSecondary}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </DockPanel>
+        </Border>
+
+        <!-- ============ Правая колонка: редактор ============ -->
+        <Border Grid.Column="1" Style="{StaticResource CardStyle}" Margin="12,0,0,0">
+            <DockPanel>
+                <!-- Панель инструментов -->
+                <Border DockPanel.Dock="Top"
+                        Background="{DynamicResource BrushSurfaceAlt}"
+                        CornerRadius="8"
+                        Padding="6"
+                        Margin="0,0,0,8">
+                    <WrapPanel Orientation="Horizontal">
+
+                        <!-- B / I / U -->
+                        <Button x:Name="BoldBtn" Content="B"
+                                Focusable="False"
+                                FontWeight="Bold" Width="32" Height="32" Margin="0,0,4,0"
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                Click="OnBoldClick"
+                                ToolTip="Жирный (Ctrl+B)"/>
+
+                        <Button x:Name="ItalicBtn" Content="I"
+                                Focusable="False"
+                                FontStyle="Italic" Width="32" Height="32" Margin="0,0,4,0"
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                Click="OnItalicClick"
+                                ToolTip="Курсив (Ctrl+I)"/>
+
+                        <Button x:Name="UnderlineBtn" Content="U"
+                                Focusable="False"
+                                Width="32" Height="32" Margin="0,0,12,0"
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                Click="OnUnderlineClick"
+                                ToolTip="Подчёркнутый (Ctrl+U)"/>
+
+                        <!-- Выравнивание -->
+                        <Button Content="⬅"
+                                Focusable="False"
+                                Width="32" Height="32" Margin="0,0,4,0"
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                Click="OnAlignLeftClick"
+                                ToolTip="По левому краю"/>
+                        <Button Content="⬌"
+                                Focusable="False"
+                                Width="32" Height="32" Margin="0,0,4,0"
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                Click="OnAlignCenterClick"
+                                ToolTip="По центру"/>
+                        <Button Content="➡"
+                                Focusable="False"
+                                Width="32" Height="32" Margin="0,0,12,0"
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                Click="OnAlignRightClick"
+                                ToolTip="По правому краю"/>
+
+                        <!-- Размер шрифта -->
+                        <TextBlock Text="Размер:"
+                                   VerticalAlignment="Center"
+                                   Margin="0,0,6,0"
+                                   Foreground="{DynamicResource BrushTextPrimary}"/>
+
+                        <ComboBox x:Name="FontSizeCombo"
+                                  Focusable="False"
+                                  Width="80" Height="32"
+                                  SelectedIndex="2"
+                                  Style="{StaticResource ModernComboBoxStyle}"
+                                  ItemContainerStyle="{StaticResource ModernComboBoxItemStyle}"
+                                  SelectionChanged="OnFontSizeChanged">
+                            <ComboBoxItem Content="12"/>
+                            <ComboBoxItem Content="14"/>
+                            <ComboBoxItem Content="16"/>
+                            <ComboBoxItem Content="18"/>
+                            <ComboBoxItem Content="22"/>
+                            <ComboBoxItem Content="26"/>
+                            <ComboBoxItem Content="32"/>
+                        </ComboBox>
+
+                        <!-- Цвет -->
+                        <TextBlock Text="Цвет:"
+                                   VerticalAlignment="Center"
+                                   Margin="12,0,6,0"
+                                   Foreground="{DynamicResource BrushTextPrimary}"/>
+
+                        <ComboBox x:Name="ColorCombo"
+                                  Focusable="False"
+                                  Width="100" Height="32"
+                                  Style="{StaticResource ModernComboBoxStyle}"
+                                  ItemContainerStyle="{StaticResource ModernComboBoxItemStyle}"
+                                  SelectionChanged="OnColorChanged">
+                            <ComboBoxItem Content="Чёрный" Tag="#111827"/>
+                            <ComboBoxItem Content="Красный" Tag="#DC2626"/>
+                            <ComboBoxItem Content="Синий" Tag="#2563EB"/>
+                            <ComboBoxItem Content="Зелёный" Tag="#16A34A"/>
+                            <ComboBoxItem Content="Оранжевый" Tag="#EA580C"/>
+                        </ComboBox>
+                    </WrapPanel>
+                </Border>
+
+                <!-- Редактор -->
+                <RichTextBox x:Name="Editor"
+                             AcceptsTab="True"
+                             VerticalScrollBarVisibility="Auto"
+                             Background="{DynamicResource BrushSurfaceAlt}"
+                             Foreground="{DynamicResource BrushTextPrimary}"
+                             BorderThickness="0"
+                             Padding="10"
+                             FontSize="16"
+                             TextChanged="OnEditorTextChanged"
+                             SelectionChanged="OnEditorSelectionChanged"/>
+            </DockPanel>
+        </Border>
+    </Grid>
+</UserControl>

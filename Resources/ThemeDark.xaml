@@ -1,0 +1,16 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Тёмная тема (мягкие оттенки, не чисто чёрный) -->
+    <SolidColorBrush x:Key="BrushBackground" Color="#1A2332"/>
+    <SolidColorBrush x:Key="BrushSurface" Color="#263547"/>
+    <SolidColorBrush x:Key="BrushSurfaceAlt" Color="#2F4157"/>
+    <SolidColorBrush x:Key="BrushTextPrimary" Color="#F1F5F9"/>
+    <SolidColorBrush x:Key="BrushTextSecondary" Color="#A5B4CB"/>
+    <SolidColorBrush x:Key="BrushAccent" Color="#4F8DF7"/>
+    <SolidColorBrush x:Key="BrushAccentHover" Color="#6FA4FF"/>
+    <SolidColorBrush x:Key="BrushSuccess" Color="#34D399"/>
+    <SolidColorBrush x:Key="BrushDanger" Color="#F87171"/>
+    <SolidColorBrush x:Key="BrushBorder" Color="#3A4A63"/>
+
+</ResourceDictionary>

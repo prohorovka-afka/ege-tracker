@@ -1,0 +1,120 @@
+<UserControl x:Class="EgeTracker.Views.PrototypesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="700" d:DesignWidth="1000">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Панель выбора предмета и задания -->
+        <Border Grid.Row="0" Style="{StaticResource CardStyle}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Предмет:" VerticalAlignment="Center" Margin="0,0,8,0"
+                           Foreground="{DynamicResource BrushTextPrimary}"/>
+                <ComboBox Width="240"
+                          ItemsSource="{Binding Subjects}"
+                          SelectedItem="{Binding SelectedSubject}"
+                          DisplayMemberPath="Name"
+                          Margin="0,0,20,0"
+                          Style="{StaticResource ModernComboBoxStyle}"
+                          ItemContainerStyle="{StaticResource ModernComboBoxItemStyle}"/>
+
+                <TextBlock Text="Номер задания:" VerticalAlignment="Center" Margin="0,0,8,0"
+                           Foreground="{DynamicResource BrushTextPrimary}"/>
+                <ComboBox Width="110"
+                          ItemsSource="{Binding TaskNumbers}"
+                          SelectedItem="{Binding SelectedTaskNumber}"
+                          Margin="0,0,20,0"
+                          Style="{StaticResource ModernComboBoxStyle}"
+                          ItemContainerStyle="{StaticResource ModernComboBoxItemStyle}"/>
+
+                <Button Content="🎲 Другое задание"
+                        Style="{StaticResource ModernButtonStyle}"
+                        Command="{Binding NextRandomCommand}"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Карточка задания -->
+        <Border Grid.Row="1" Style="{StaticResource CardStyle}" Margin="0,12,0,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <!-- Бейдж с номером задания -->
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                        <Border Background="{DynamicResource BrushAccent}"
+                                CornerRadius="8" Padding="12,6">
+                            <TextBlock Text="{Binding CurrentTask.KimPosition, StringFormat=№ {0}}"
+                                       Foreground="White" FontWeight="Bold" FontSize="14"/>
+                        </Border>
+                        <Border Background="{DynamicResource BrushSurfaceAlt}"
+                                CornerRadius="8" Padding="12,6" Margin="8,0,0,0">
+                            <TextBlock Text="{Binding CurrentTask.TaskType}"
+                                       Foreground="{DynamicResource BrushTextPrimary}"
+                                       FontSize="13"/>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- Текст задания -->
+                    <TextBlock Text="{Binding CurrentTask.Question}"
+                               TextWrapping="Wrap" FontSize="15"
+                               LineHeight="22"
+                               Foreground="{DynamicResource BrushTextPrimary}"/>
+
+                    <!-- Поле ответа -->
+                    <TextBox Style="{StaticResource ModernTextBoxStyle}"
+                             Margin="0,16,0,0"
+                             Width="320" HorizontalAlignment="Left"
+                             Text="{Binding UserAnswer, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <!-- Кнопки -->
+                    <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+                        <Button Content="✓ Проверить"
+                                Style="{StaticResource ModernButtonStyle}"
+                                Command="{Binding CheckAnswerCommand}"
+                                Margin="0,0,8,0"/>
+                        <Button Content="▶ Видеоразбор"
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                Command="{Binding OpenVideoCommand}"
+                                Visibility="{Binding CurrentTask.HasVideo, Converter={StaticResource BoolToVisibilityConverter}}"
+                                Margin="0,0,8,0"/>
+                        <Button Content="🎯 Работа над ошибкой (15 заданий)"
+                                Style="{StaticResource SecondaryButtonStyle}"
+                                Command="{Binding StartTrainingCommand}"
+                                Visibility="{Binding ShowResult, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    </StackPanel>
+
+                    <!-- ⭐ Результат — БЕЗ первичных баллов, только ✔/✘ -->
+                    <Border Margin="0,16,0,0"
+                            Padding="12"
+                            CornerRadius="8"
+                            Background="{DynamicResource BrushSurfaceAlt}"
+                            Visibility="{Binding ShowResult, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <StackPanel>
+                            <TextBlock Text="{Binding ResultMessage}"
+                                       TextWrapping="Wrap"
+                                       FontWeight="SemiBold"
+                                       Foreground="{DynamicResource BrushTextPrimary}"/>
+                            <!-- ⭐ Прогресс в формате N из M -->
+                            <TextBlock Margin="0,6,0,0"
+                                       FontSize="12"
+                                       Foreground="{DynamicResource BrushTextSecondary}"
+                                       Text="{Binding TrainingProgressText}"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Кнопка следующего задания в тренировке -->
+                    <StackPanel Visibility="{Binding InTraining, Converter={StaticResource BoolToVisibilityConverter}}"
+                                Margin="0,12,0,0">
+                        <Button Content="→ Следующее тренировочное задание"
+                                Style="{StaticResource ModernButtonStyle}"
+                                Command="{Binding NextTrainingCommand}"/>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</UserControl>

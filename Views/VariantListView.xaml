@@ -1,0 +1,65 @@
+<UserControl x:Class="EgeTracker.Views.VariantListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="700" d:DesignWidth="1000">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Панель выбора предмета -->
+        <Border Grid.Row="0" Style="{StaticResource CardStyle}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Предмет:" VerticalAlignment="Center" Margin="0,0,8,0"
+                           Foreground="{DynamicResource BrushTextPrimary}"/>
+                <ComboBox Width="260"
+                          ItemsSource="{Binding Subjects}"
+                          SelectedItem="{Binding SelectedSubject}"
+                          DisplayMemberPath="Name"
+                          Margin="0,0,16,0"
+                          Style="{StaticResource ModernComboBoxStyle}"
+                          ItemContainerStyle="{StaticResource ModernComboBoxItemStyle}"/>
+                <TextBlock VerticalAlignment="Center"
+                           Foreground="{DynamicResource BrushTextSecondary}"
+                           Text="Выберите вариант для прохождения"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Сетка кнопок вариантов -->
+        <Border Grid.Row="1" Style="{StaticResource CardStyle}" Margin="0,12,0,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding Variants}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Width="160" Height="70" Margin="6"
+                                    Style="{StaticResource ModernButtonStyle}"
+                                    Command="{Binding DataContext.OpenVariantCommand,
+                                              RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    CommandParameter="{Binding}">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding DisplayText}"
+                                               FontSize="15" FontWeight="Bold"
+                                               HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding ProgressText}"
+                                               FontSize="11"
+                                               HorizontalAlignment="Center"
+                                               Opacity="0.8"
+                                               Margin="0,4,0,0"/>
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</UserControl>
